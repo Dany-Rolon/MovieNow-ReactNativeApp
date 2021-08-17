@@ -4,21 +4,25 @@ import { TouchableOpacity } from 'react-native';
 import { StyleSheet } from 'react-native';
 import { Image, View } from 'react-native'
 import { Movie } from '../interfaces/movieInterface';
+import { useNavigation } from '@react-navigation/native';
+import { RootStackParams } from '../navigation/Navigation';
 
 interface Props {
     movie: Movie;
     height?: number;
     width?: number;
-    navigation: StackNavigationProp<any,any>;
 }
 
-const MoviePoster = ({ movie, height = 300, width = 200, navigation }: Props) => {
+type DetailScreenNavigation = StackNavigationProp<RootStackParams, 'DetailScreen'>
+
+const MoviePoster = ({ movie, height = 300, width = 200 }: Props) => {
 
     const uri = `https://image.tmdb.org/t/p/w500${movie.poster_path}`
+    const navigation = useNavigation<DetailScreenNavigation>()
 
     return (
         <TouchableOpacity
-        onPress={() => navigation.navigate('DetailScreen', movie)}
+        onPress={() => navigation.navigate('DetailScreen',movie)}
             activeOpacity={0.7}
             style={{
                 width,
